@@ -29,15 +29,23 @@ public class MainController {
 		return "wedweb";
 	}
 	
+//	@RequestMapping(value="/attendCheck",method=RequestMethod.POST)
+//	public String attendCheck(Customer customer) {
+//		service.insert(customer);
+//		List<Customer> list = service.getList();
+//		for(Customer a:list) {
+//			System.out.println(a.toString());			
+//		}
+//		return"redirect:/";
+//	}
+	
 	@RequestMapping(value="/attendCheck",method=RequestMethod.POST)
 	public String attendCheck(Customer customer) {
-		service.insert(customer);
-		List<Customer> list = service.getList();
-		for(Customer a:list) {
-			System.out.println(a.toString());			
-		}
+		
 		return"redirect:/";
 	}
+	
+	
 	
 
 }
