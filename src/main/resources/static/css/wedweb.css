@@ -19,11 +19,11 @@ p {
 }
 
 .bgimg {
-	background-image: url("/../PUBLIC/images/image9.png")
+	background-image: url("/images/image9.png")
 }
 
 .bgimg2 {
-	background-image: url("/../PUBLIC/images/image13.png")
+	background-image: url("/images/image13.png")
 }
 
 * {
