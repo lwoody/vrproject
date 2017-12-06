@@ -29,11 +29,6 @@ public class MainController {
 		return "wedweb";
 	}
 	
-	@RequestMapping(value="/map")
-	public String mamp() {
-		return "map";
-	}
-	
 	@RequestMapping(value="/attendCheck",method=RequestMethod.POST)
 	public String attendCheck(Customer customer) {
 		service.insert(customer);
