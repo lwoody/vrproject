@@ -16,7 +16,10 @@ $(document).ready(function() {
 	    position: new naver.maps.LatLng(37.5230775, 127.0560914),
 	    map: map,
 	    icon: {
-	        url: '../images/hearticon.png',
+//	        url: '../images/hearticon.png',
+	    		content: '<img src="/images/hearticon.png" alt="" ' +
+            'style="margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none; ' +
+            '-webkit-user-select: none; position: absolute; left: 0px; top: 0px;">',
 	        size: new naver.maps.Size(50, 50),
 	        origin: new naver.maps.Point(0, 0),
 	        anchor: new naver.maps.Point(25, 26)
