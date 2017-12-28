@@ -2,7 +2,6 @@ package com.albumBox.app.dao;
 
 import java.util.List;
 
-import org.assertj.core.internal.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
