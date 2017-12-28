@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+		<!-- default header name is X-CSRF-TOKEN -->
+	<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Album</title>
+    <meta name="description" content="Demo of Material design Album template by TemplateFlip.com."/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/album.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body id="top">
+ 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+   	  <a href="/create-board" id="create-button" class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast mdl-shadow--4dp"><i class="material-icons">add</i></a>
+     
+      <header class="mdl-layout__header mdl-layout__header--waterfall site-header">
+        <div class="mdl-layout__header-row site-logo-row"><span class="mdl-layout__title">
+            <div class="site-logo"></div><span class="site-description">Material Design Album</span></span></div>
+        <div class="mdl-layout__header-row site-navigation-row mdl-layout--large-screen-only">
+          <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font"><a class="mdl-navigation__link" href="/home">Home</a><a class="mdl-navigation__link" href="/show-album">Album</a><a class="mdl-navigation__link" href="/show-about">About</a><a id="login-button-a" class="mdl-navigation__link" href="/login">Login</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font"><a class="mdl-navigation__link" href="/home">Home</a><a class="mdl-navigation__link" href="/show-album">Album</a><a class="mdl-navigation__link" href="/show-about">About</a><a id="login-button-b" class="mdl-navigation__link" href="/login">Login</a>
+        </nav>
+      </div>
+      
+      
+      
+      <main class="mdl-layout__content" id="scroll-layer">
+        <div class="site-content">
+          <div class="container">
+          <div class="mdl-grid site-max-width" id="cardContainer">
+          
+   			 <div th:each="item : ${boardList}" class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+      			  <div class="mdl-card__media">
+      			      <img class="article-image" th:src="*{'data:image/jpg;base64,'+item.image}" border="0" alt="">
+      			  </div>
+      			  <div class="mdl-card__title">
+       			     <h2 class="mdl-card__title-text" th:text="${item.title}"></h2>
+       			 </div>
+       			 <div class="mdl-card__supporting-text" th:text="${item.content}">
+       			 </div>
+       			 <br>        
+       			 <div class="mdl-card__actions mdl-card--border">
+       			   <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="/show-photo-detail">
+        			    더보기 
+        			  </a>
+        			<div class="mdl-card__supporting-text" th:text="${item.Date}">
+        			</div>
+   			 </div>
+  			</div>
+  		  </div>
+  		  
+        </div>
+        
+       
+  		  	<div id="loading-spinner" class="loader">Loading...</div>
+          
+        </div>
+          
+        <!-- <footer class="mdl-mini-footer">
+          <div class="footer-container">
+            <div class="mdl-logo">&copy; Unitiled. Design: <a href="https://templateflip.com/" target="_blank">TemplateFlip</a></div>
+            <ul class="mdl-mini-footer__link-list">
+              <li><a href="#">Privacy & Terms</a></li>
+            </ul>
+          </div>
+        </footer> -->
+      </main>
+      <script src="https://code.getmdl.io/1.3.0/material.min.js" defer></script>
+      <script type="text/javascript" th:src="@{/js/album.js}"></script>
+      <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    </div>
+  </body>
+</html>

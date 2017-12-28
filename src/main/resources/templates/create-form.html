@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>추가</title>
+    <meta name="description" content="Your contact page description"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+    
+  </head>
+  <body id="top">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header"><!-- <a href="/create-board" id="create-button" class="mdl-button mdl-button--fab mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast mdl-shadow--4dp"><i class="material-icons">add</i></a> -->
+      
+      <header class="mdl-layout__header mdl-layout__header--waterfall site-header">
+        <div class="mdl-layout__header-row site-logo-row"><span class="mdl-layout__title">
+            <div class="site-logo"></div><span class="site-description">Material Design Album</span></span></div>
+        <div class="mdl-layout__header-row site-navigation-row mdl-layout--large-screen-only">
+          <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font"><a class="mdl-navigation__link" href="/home">Home</a><a class="mdl-navigation__link" href="/show-album">Album</a><a class="mdl-navigation__link" href="/show-about">About</a><a id="login-button-a" class="mdl-navigation__link" href="/login">Login</a>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer mdl-layout--small-screen-only">
+        <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font"><a class="mdl-navigation__link" href="/home">Home</a><a class="mdl-navigation__link" href="/show-album">Album</a><a class="mdl-navigation__link" href="/show-about">About</a><a id="login-button-b" class="mdl-navigation__link" href="/login">Login</a>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="site-content">
+          <div class="mdl-grid site-max-width">
+            <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp page-content">
+              <div class="mdl-card__title">
+                <h1 class="mdl-card__title-text">New Memory</h1>
+              </div>
+              <div class="mdl-card__media"><img class="article-image" src="img/contact.jpg" border="0" alt="Contact">
+              </div>
+              <div class="mdl-grid site-copy">
+                <div class="mdl-cell mdl-cell--12-col">
+                <div class="mdl-card__supporting-text">
+  <p>새로운 추억</p>
+  <form th:action="@{/create-boardItem}" method="post" class="form-contact" enctype="multipart/form-data">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="Title" name="title">
+          <label class="mdl-textfield__label" for="Title">제목</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <textarea class="mdl-textfield__input" type="text" rows="5" id="note" name="content"></textarea>
+          <label class="mdl-textfield__label" for="note">내용</label>
+      </div>
+     
+     <!-- 파일 추가  -->      
+     
+     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<div>
+                    <label for="input-file-now">Photo</label>
+                    <input type="file" id="input-file-now" class="dropify" name="imageFile"/>
+                    <br />
+     
+      		</div>
+     </div>
+    
+      <p>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit">
+              Submit
+          </button>
+      </p>
+  </form>
+</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="mdl-mini-footer">
+          <div class="footer-container">
+            <div class="mdl-logo">&copy; Unitiled. Design: <a href="https://templateflip.com/" target="_blank">TemplateFlip</a></div>
+            <ul class="mdl-mini-footer__link-list">
+              <li><a href="#">Privacy & Terms</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+      <script src="https://code.getmdl.io/1.3.0/material.min.js" defer></script>
+      <script type="text/javascript" src="/js/main.js"></script>
+      <script type="text/javascript" src="/js/create-form.js"></script>
+    </div>
+  </body>
+</html>
