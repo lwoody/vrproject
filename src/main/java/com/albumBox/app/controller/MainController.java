@@ -1,7 +1,6 @@
 package com.albumBox.app.controller;
 
 import java.io.IOException;
-
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,9 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.codec.binary.Base64;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -27,11 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.albumBox.app.model.BoardItem;
 import com.albumBox.app.model.User;
 import com.albumBox.app.service.BoardService;
 import com.albumBox.app.service.UserService;
+import com.mongodb.MongoClient;
 
 @Controller
 //@SessionAttributes("loginUser")
@@ -45,6 +42,7 @@ public class MainController {
 
 	@Autowired
 	public MainController(UserService userService, BoardService boardService, GridFsTemplate gridFsTemplate) {
+		
 		this.userService=userService;
 		this.boardService=boardService;
 		this.gridFsTemplate=gridFsTemplate;
