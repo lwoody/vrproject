@@ -63,20 +63,20 @@ public class MainController {
 		}
 	}
 	
-	@RequestMapping(value="/")
-	public String index() {
+	// @RequestMapping(value="/")
+	// public String index() {
 		
-		for (User User : userService.getList()) {
-			System.out.println(User.toString());
+	// 	for (User User : userService.getList()) {
+	// 		System.out.println(User.toString());
 			
-		}
+	// }
 		
 		
 		
 		
 	
-		return "index";
-	}
+	//	return "index";
+	//}
 	
 	@RequestMapping(value="/home")
 	public String main() {
@@ -226,7 +226,7 @@ public class MainController {
 		}
 	}
 
-	@RequestMapping("/showCurrentStatus")
+	@RequestMapping("/")
 	public String showCurrentStatus(){
 		return "currentStatus";
 	}

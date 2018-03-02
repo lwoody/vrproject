@@ -38,7 +38,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     				.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
     				.and()
                 .authorizeRequests()
-					.antMatchers("/","/home", "/about","/show-portfolio-page","/register","/register-confirm","/login-check",
+					.antMatchers("/","/home", "/showCurrentStatus","/about","/show-portfolio-page","/register","/register-confirm","/login-check",
 							"/create-boardItem","/img/**","/css/**","/js/**").permitAll()
 					.anyRequest().authenticated()
 					.and()

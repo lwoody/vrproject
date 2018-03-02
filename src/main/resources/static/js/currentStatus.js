@@ -240,6 +240,7 @@ $(document).ready(function() {
             }else{//끝난 고객의 progress bar 연장시간 세팅
                 if(oCustomer.extendTime===0){
                     $(progressElementExtendTimeIndex).html("+0");
+                    $(progressElementExtendTimeIndex).css("text-color","white");
                     $(progressElementExtendTimeIndex).show();
                 }
                 //oCustomer.extendTime+=1;//1초씩 더함
