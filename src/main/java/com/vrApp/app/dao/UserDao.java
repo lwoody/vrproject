@@ -53,7 +53,7 @@ public class UserDao{
 		// TODO Auto-generated method stub
 		return repository.findByName(user.name);
 	}
-	
+
 	public User getUserByName(String name) {
 		// TODO Auto-generated method stub
 		return repository.findByName(name);

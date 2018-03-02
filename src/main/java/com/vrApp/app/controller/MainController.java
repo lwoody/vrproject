@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.vrApp.app.model.BoardItem;
+import com.vrApp.app.model.Customer;
 import com.vrApp.app.model.User;
 import com.vrApp.app.service.BoardService;
+import com.vrApp.app.service.CustomerService;
 import com.vrApp.app.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,12 +36,15 @@ public class MainController {
 	private BoardService boardService;
 	private GridFsTemplate gridFsTemplate;
 
+	private CustomerService customerService;
+
 	@Autowired
-	public MainController(UserService userService, BoardService boardService, GridFsTemplate gridFsTemplate) {
+	public MainController(CustomerService customerService, UserService userService, BoardService boardService, GridFsTemplate gridFsTemplate) {
 		
 		this.userService=userService;
 		this.boardService=boardService;
 		this.gridFsTemplate=gridFsTemplate;
+		this.customerService=customerService;
 		
 //		userService.deleteAll();
 //
@@ -228,8 +229,11 @@ public class MainController {
 	}
 
 	@PostMapping(value="/addCustomer")
-	public @ResponseBody boolean addCustomer(@RequestParam("memberCount") String memberCount, HttpServletRequest request){
-
+	public @ResponseBody boolean addCustomer(
+			@RequestParam("memberCount") String memberCount,
+			@RequestParam("startDate") String startDate, HttpServletRequest request){
+		Customer customerDO = new Customer(memberCount, startDate);
+		customerService.insert(customerDO);
 		return true;
 	}
 	

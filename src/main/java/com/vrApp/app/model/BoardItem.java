@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="boards")
 public class BoardItem {
-	
+
 	@Id
 	public String id;
 	public String title, content, imageId, image, userName, date;	
@@ -58,7 +58,7 @@ public class BoardItem {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getId() {
 		return id;
 	}

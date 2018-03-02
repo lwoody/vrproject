@@ -6,34 +6,41 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "customers")
 public class Customer {
 
-    @Id
-    public int id;
-    public int memberCount;
-    public String date;
+    public String id;
+    public String memberCount;
+    public String startDate;
     public boolean isBeverageOrdered;
 
-    public int getId() {
+    public Customer() {}
+
+    public Customer(String memberCount, String startDate){
+        super();
+        this.memberCount=memberCount;
+        this.startDate=startDate;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getMemberCount() {
+    public String getMemberCount() {
         return memberCount;
     }
 
-    public void setMemberCount(int memberCount) {
+    public void setMemberCount(String memberCount) {
         this.memberCount = memberCount;
     }
 
-    public String getDate() {
-        return date;
+    public String getstartDate() {
+        return startDate;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.startDate = date;
     }
 
     public boolean isBeverageOrdered() {
@@ -47,6 +54,6 @@ public class Customer {
     @Override
     public String toString(){
         return String.format(
-                "Customer[id="+id+", memberCount="+memberCount+", date="+date+", isBeverageOrderd="+isBeverageOrdered);
+                "Customer[id="+id+", memberCount="+memberCount+", date="+startDate+", isBeverageOrderd="+isBeverageOrdered);
     }
 }

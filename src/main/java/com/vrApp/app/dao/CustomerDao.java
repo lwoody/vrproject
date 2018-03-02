@@ -1,12 +1,9 @@
 package com.vrApp.app.dao;
 
 import com.vrApp.app.model.Customer;
-import com.vrApp.app.model.User;
 import com.vrApp.app.repository.CustomerRepository;
-import com.vrApp.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,17 +38,15 @@ public class CustomerDao {
 	public void deleteAll() {
 		repository.deleteAll();
 	}
-	
+
+	public List<Customer> getList() {
+		return repository.findAll();
+	}
 
 
-	public Customer getCustomer(Customer customer) {
+	public Customer getCustomerById(Customer customer) {
 		// TODO Auto-generated method stub
 		return repository.findById(customer.id);
-	}
-	
-	public Customer getCustomerById(int id) {
-		// TODO Auto-generated method stub
-		return repository.findById(id);
 	}
 	
 }

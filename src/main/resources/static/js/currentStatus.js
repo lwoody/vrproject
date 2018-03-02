@@ -24,10 +24,10 @@ $(document).ready(function() {
 
      //고객 생성자
      function OCustomer(memberCount, playedTime) {
-         var currentTime = new Date();
+         var currentDate = new Date().toISOString().slice(0,10).replace(/-/g,"");
          return{
              memberCount: memberCount,
-             startTime: currentTime,
+             startDate: currentDate,
              playedTime: playedTime,//이용시간 % 단위
              extendTime: 0,//연장시간 second 단위
              //isBeverageOrdered:
@@ -140,61 +140,64 @@ $(document).ready(function() {
             alert("인원 입력해라");
         }
         else{
-            // $.ajax({
-            //     type: 'POST',
-            //     url: "http://localhost:8080/addCustomer",
-            //     data: {
-            //         //인원 및 시간 전달
-            //         "memberCount":_memberCountText,
-            //         //"isBeverageOrdered":
-            //     },
-            //     beforeSend: function(xhr) {
-            //         xhr.setRequestHeader(header, token);
-            //     },
-            //     success: function (response) {
-                    _playCustomerCount+=1;
-                    //알림 화면 표시
-                    _ISALERTEND = false;
-                    _alertView.show();
-                    _alertView.find("span").html(_emptyProgressId+"번 손님 <br> 입장하셨습니다.");
-                    _entryView.css("display", "none");
+            _playCustomerCount+=1;
+            //알림 화면 표시
+            _ISALERTEND = false;
+            _alertView.show();
+            _alertView.find("span").html(_emptyProgressId+"번 손님 <br> 입장하셨습니다.");
+            _entryView.css("display", "none");
 
-                    setTimeout(function(){
-                        _alertView.css("display","none");
-                        _entryView.css("display", "block");
-                        _ISALERTEND = true;
-                    },2000);
+            setTimeout(function(){
+                _alertView.css("display","none");
+                _entryView.css("display", "block");
+                _ISALERTEND = true;
+            },2000);
 
-                    //progress view 처리 및 고객리스트에 푸쉬
-                    var oCustomer = new OCustomer(_memberCountText,100),//인원수, 이용할시간(현재는 퍼센티지)
-                        customerListIndex = _emptyProgressId;
-                        progressElementIndex = "#customer"+customerListIndex;
-                    _playCustomerList[customerListIndex] = oCustomer;
+            //progress view 처리 및 고객리스트에 푸쉬
+            var oCustomer = new OCustomer(_memberCountText,100),//인원수, 이용할시간(현재는 퍼센티지)
+                customerListIndex = _emptyProgressId;
+                progressElementIndex = "#customer"+customerListIndex;
+            _playCustomerList[customerListIndex] = oCustomer;
 
-                    $(progressElementIndex).text(oCustomer.playedTime+"%");
-                    $(progressElementIndex).each(function(){
-                        var percent = $(this).html();
-                        var pTop = 100 - ( percent.slice(0, percent.length - 1) ) + "%";
-                        $(this).parent().css({
-                            'height' : percent,
-                            'top' : pTop
-                        });
-                    });
+            $(progressElementIndex).text(oCustomer.playedTime+"%");
+            $(progressElementIndex).each(function(){
+                var percent = $(this).html();
+                var pTop = 100 - ( percent.slice(0, percent.length - 1) ) + "%";
+                $(this).parent().css({
+                    'height' : percent,
+                    'top' : pTop
+                });
+            });
 
-                    for(var index=1; index<13; index++){ // 리스트의 인덱스로 못돌림 -> 초기에는 index자체가 존재안하기 때문
-                        if(_playCustomerList[index]==null){
-                            _emptyProgressId=index;
-                            break;
-                        }
-                    }
+            for(var index=1; index<13; index++){ // 리스트의 인덱스로 못돌림 -> 초기에는 index자체가 존재안하기 때문
+                if(_playCustomerList[index]==null){
+                    _emptyProgressId=index;
+                    break;
+                }
+            }
 
-                    //초기화할 데이터
-                    _memberCountText = "";
-                    modifyEntryView(_memberCountText);
+            //초기화할 데이터
+            _memberCountText = "";
+            modifyEntryView(_memberCountText);
 
-                // },
-                // error: function () {}
-           // });
+            $.ajax({
+
+                type: 'POST',
+                url: "/addCustomer",
+                dataType : 'json',
+                data: {
+                    "memberCount": oCustomer.memberCount,
+                    "startDate" : oCustomer.startDate,
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (response) {
+                       console.log(response);
+                },
+                error: function () {}
+                
+            });
         }
     }
 
