@@ -1,5 +1,6 @@
 package com.vrApp.app;
 
+import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
@@ -26,13 +27,15 @@ public class SpringConfig extends AbstractMongoConfiguration{
 
 	@Override
 	protected String getDatabaseName() {
-		return "yourdb";
+		//return "yourdb";
+		return new MongoProperties().getDatabase();
 	}
 
 	@Override
 	@Bean
 	public Mongo mongo() throws Exception {
-		return new MongoClient("127.0.0.1");
+		//return new MongoClient("127.0.0.1");
+		return new Mongo();
 	}
 
 }
