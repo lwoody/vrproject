@@ -1,5 +1,6 @@
 package com.vrApp.app;
 
+import com.mongodb.MongoClientURI;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +29,16 @@ public class SpringConfig extends AbstractMongoConfiguration{
 	@Override
 	protected String getDatabaseName() {
 		//return "yourdb";
-		return new MongoProperties().getDatabase();
+		return "heroku_rb8fsctc";
 	}
 
 	@Override
 	@Bean
 	public Mongo mongo() throws Exception {
 		//return new MongoClient("127.0.0.1");
-		return new Mongo();
+		MongoClientURI uri = new MongoClientURI("mongodb://heroku_rb8fsctc:ko28uje2golc051h659ciotsbr@ds235708.mlab.com:35708/heroku_rb8fsctc");
+		MongoClient client = new MongoClient(uri);
+		return client;
 	}
 
 }

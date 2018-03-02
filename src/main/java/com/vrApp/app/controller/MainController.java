@@ -45,22 +45,22 @@ public class MainController {
 		this.boardService=boardService;
 		this.gridFsTemplate=gridFsTemplate;
 		
-		userService.deleteAll();		
-	
-		gridFsTemplate.delete(new Query(Criteria.where("_id").exists(true)));
-		User user = new User("lwoody","1234");
-//		for(int i=1;i<100;i++) {
-//			BoardItem boardItem = new BoardItem(Integer.toString(i),Integer.toString(i));
-//			
-//			boardService.insert(boardItem, "lwoody");
-//			System.out.println(boardService.getList());
+//		userService.deleteAll();
+//
+//		gridFsTemplate.delete(new Query(Criteria.where("_id").exists(true)));
+//		User user = new User("lwoody","1234");
+////		for(int i=1;i<100;i++) {
+////			BoardItem boardItem = new BoardItem(Integer.toString(i),Integer.toString(i));
+////
+////			boardService.insert(boardItem, "lwoody");
+////			System.out.println(boardService.getList());
+////		}
+//		userService.insert(user);
+//		for (User User : userService.getList()) {
+//			System.out.println(User.toString());
+//			System.out.println(User.getPassword());
+//
 //		}
-		userService.insert(user);
-		for (User User : userService.getList()) {
-			System.out.println(User.toString());
-			System.out.println(User.getPassword());
-			
-		}
 	}
 	
 	// @RequestMapping(value="/")
@@ -70,10 +70,6 @@ public class MainController {
 	// 		System.out.println(User.toString());
 			
 	// }
-		
-		
-		
-		
 	
 	//	return "index";
 	//}
