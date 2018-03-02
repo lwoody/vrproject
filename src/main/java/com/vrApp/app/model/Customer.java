@@ -9,6 +9,8 @@ public class Customer {
     public String id;
     public String memberCount;
     public String startDate;
+    public String remainTime;
+    public String extendedTime;
     public boolean isBeverageOrdered;
 
     public Customer() {}
@@ -35,14 +37,6 @@ public class Customer {
         this.memberCount = memberCount;
     }
 
-    public String getstartDate() {
-        return startDate;
-    }
-
-    public void setDate(String date) {
-        this.startDate = date;
-    }
-
     public boolean isBeverageOrdered() {
         return isBeverageOrdered;
     }
@@ -51,9 +45,33 @@ public class Customer {
         isBeverageOrdered = beverageOrdered;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getRemainTime() {
+        return remainTime;
+    }
+
+    public void setRemainTime(String remainTime) {
+        this.remainTime = remainTime;
+    }
+
+    public String getExtendedTime() {
+        return extendedTime;
+    }
+
+    public void setExtendedTime(String extendedTime) {
+        this.extendedTime = extendedTime;
+    }
+
     @Override
     public String toString(){
         return String.format(
-                "Customer[id="+id+", memberCount="+memberCount+", date="+startDate+", isBeverageOrderd="+isBeverageOrdered);
+                "Customer[id="+id+", memberCount="+memberCount+", date="+startDate+", isBeverageOrderd="+isBeverageOrdered+"]");
     }
 }

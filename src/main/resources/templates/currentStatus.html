@@ -23,49 +23,6 @@
     <!--<link rel="stylesheet" href="currentStatus.css">-->
     <style>
 
-        /*alert Card*/
-         /*.demo-card-event.mdl-card {
-             width: 256px;
-             height: 256px;
-             background: #3E4EB8;
-         }
-        .demo-card-event > .mdl-card__actions {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .demo-card-event > .mdl-card__title {
-            align-items: flex-start;
-        }
-        .demo-card-event > .mdl-card__title > h4 {
-            margin-top: 0;
-        }
-        .demo-card-event > .mdl-card__actions {
-            display: flex;
-            box-sizing:border-box;
-            align-items: center;
-        }
-        .demo-card-event > .mdl-card__actions > .material-icons {
-            padding-right: 10px;
-        }
-        .demo-card-event > .mdl-card__title,
-        .demo-card-event > .mdl-card__actions,
-        .demo-card-event > .mdl-card__actions > .mdl-button {
-            color: #fff;
-        }*/
-
-        /*!*progress bar color*!*/
-        /*.mdl-progress > .progressbar {*/
-            /*background-color: black;*/
-        /*}*/
-
-        /*.mdl-progress> .bufferbar {*/
-            /*background-image: linear-gradient(to right, white, white), linear-gradient(to right, black, black);*/
-        /*}*/
-
-        /*.mdl-progress > .auxbar {*/
-            /*background-image: linear-gradient(to right, white, white), linear-gradient(to right, black, black);*/
-        /*}*/
-
-
         /*고객 상태바*/
 
         .container {
@@ -75,6 +32,10 @@
             overflow: hidden;
             float: left;
             border: black solid 2px;
+        }
+
+        .rounded{
+            height: 620px;
         }
 
         .vertical .progress-bar {
@@ -108,7 +69,7 @@
 
         /*뷰비율 고정*/
         #alert_view, #default_view, #entry_view, #error_view{
-            height:550px;
+            height:678px;
         }
 
         /*추가시간 ptag 마진 0*/
@@ -119,8 +80,8 @@
     </style>
 </head>
 <body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600" style="margin-left: 0px;width:100%;">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600" style="width:100%;">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title"></span>
             <div class="mdl-layout-spacer"></div>
@@ -137,14 +98,14 @@
             </ul>
         </div>
     </header>
-    <main class="mdl-layout__content mdl-color--grey-100" style="margin-left: 0px">
-        <div class="mdl-grid demo-content">
+    <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
             <!--고객상태바-->
             <div id="progress_view" class="demo-charts mdl-color--white mdl-shadow--2dp  mdl-cell--12-col mdl-grid">
                 <div class="demo-charts mdl-color--white mdl-shadow--1dp  mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                     <div class=" mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
-                    <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                    <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="text-align: center;">
                           <div class="progress-bar">
                               <p class="customer1_extend_time" style="display: none"></p>
                                <div class="progress-track">
@@ -157,7 +118,7 @@
                 </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer2_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -170,7 +131,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer3_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -183,7 +144,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer4_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -196,7 +157,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer5_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -209,7 +170,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer6_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -222,7 +183,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer7_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -235,7 +196,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer8_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -248,7 +209,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer9_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -261,7 +222,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer9_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -274,7 +235,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer9_extend_time" style="display: none"></p>
                         <div class="progress-track">
@@ -287,7 +248,7 @@
             </div>
             <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
                 <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="height:500px; text-align: center;">
+                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
                     <div class="progress-bar">
                         <p class="customer9_extend_time" style="display: none"></p>
                         <div class="progress-track">
