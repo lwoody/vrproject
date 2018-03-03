@@ -1,28 +1,29 @@
 <!DOCTYPE html>
-<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
     <!-- default header name is X-CSRF-TOKEN -->
-    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
 
     <title>현황</title>
-    <meta name="description" content="Demo of Material design portfolio template by TemplateFlip.com."/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en" rel="stylesheet">
+    <meta name="description" content="Demo of Material design portfolio template by TemplateFlip.com." />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;amp;lang=en"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,latin-ext" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,latin-ext" rel="stylesheet"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!--<link rel="stylesheet" href="currentStatus.css">-->
     <style>
-
         /*고객 상태바*/
 
         .container {
@@ -31,11 +32,11 @@
             padding: 0px;
             overflow: hidden;
             float: left;
-            border: black solid 2px;
+            
         }
 
-        .rounded{
-            height: 620px;
+        .rounded {
+            height: 650px;
         }
 
         .vertical .progress-bar {
@@ -53,10 +54,10 @@
 
         .vertical .progress-fill {
             position: relative;
-            background: black;
+            /* 회색 게이지 - top이 감소하는 방향 */
+            background: grey;
             height: 50%;
             width: 100%;
-            color: #fff;
             text-align: center;
             font-size: 12px;
             line-height: 20px;
@@ -68,375 +69,469 @@
         }
 
         /*뷰비율 고정*/
-        #alert_view, #default_view, #entry_view, #error_view{
-            height:678px;
+
+        .total-screen,
+        main,
+        .total_view {
+            background-color: black;
+        }
+
+        .left_view {
+            height: 100%;
+            background-color: black;
+        }
+
+        .right_view {
+            height: 100%;
+            background-color: transparent;
+        }
+
+        #alert_view,
+        #default_view,
+        #entry_view,
+        #error_view {
+            height: 500px;
+        }
+
+        .demo-options {
+            height: 500px;
+        }
+
+        .mdl-card {
+            height: 500px;
+        }
+
+        #progress_view {
+            height: 100%;
+        }
+
+        #clock {
+            height: 70px;
+            display: block;
+            margin-top: 20px;
+            font-size: 20px;
         }
 
         /*추가시간 ptag 마진 0*/
+
         p {
             margin-bottom: 0px;
         }
 
+        header {
+            height: 0px;
+        }
+
+        .mdl-layout__header {
+            height: 10%;
+            min-height: 0px;
+            background-color: black;
+        }
+
+        .mdl-grid {
+            background-color: black;
+        }
+
+        .progress-bar-wrapper {
+            color: white;
+            margin-bottom: 0px;
+            text-align: center;
+            padding: 0px;
+        }
+
+        .progress-number {
+            font-size: 30px;
+            padding-bottom: 20px;
+            padding-top: 30px;
+            color: grey;
+        }
+
+        /* click effect */
+
+        .progress-number:active {
+            font-size: 40px;
+            padding-bottom: 20px;
+            color: white;
+        }
+
+        .progress-track {
+            background-color: grey;
+        }
+
+        .progress-extend-text {
+            background-color: red;
+            height: 70px;
+            /* +글자만 */
+            font-size: 25px;
+        }
+
+        .progress-seperate-line {
+            margin-left: -300vw;
+            padding-left: 300vw;
+            margin-right: -300vw;
+            padding-right: 300vw;
+            border-bottom: red solid 2px;
+        }
+
+        body {
+            height: 100%;
+        }
+
+        h5 {
+            margin-top: 0px;
+        }
+
+        ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: rgb(222, 222, 229);
+            opacity: 1;
+            /* Firefox */
+        }
     </style>
 </head>
+
 <body>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600" style="width:100%;">
-        <div class="mdl-layout__header-row">
-            <span class="mdl-layout-title"></span>
-            <div class="mdl-layout-spacer"></div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            </div>
-            <p id="clock" align="right" class="mdl-cell--12-col"></p>
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-                <i class="material-icons">more_vert</i>
-            </button>
-            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                <li class="mdl-menu__item">About</li>
-                <li class="mdl-menu__item">Contact</li>
-                <li class="mdl-menu__item">Legal information</li>
-            </ul>
-        </div>
-    </header>
-    <main class="mdl-layout__content mdl-color--grey-100">
-        <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
-            <!--고객상태바-->
-            <div id="progress_view" class="demo-charts mdl-color--white mdl-shadow--2dp  mdl-cell--12-col mdl-grid">
-                <div class="demo-charts mdl-color--white mdl-shadow--1dp  mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                    <div class=" mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
-                    <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="text-align: center;">
-                          <div class="progress-bar">
-                              <p class="customer1_extend_time" style="display: none"></p>
-                               <div class="progress-track">
-                                  <div class="progress-fill">
-                                        <span id="customer1" style="display:none">0</span>
-                                  </div>
-                               </div>
-                          </div>
+    <div class="total-screen mdl-layout">
+        <main class="mdl-color--grey-100">
+            <div class="total_view mdl-grid">
+                <div class="left_view mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
+                    <!--고객상태바-->
+                    <div id="progress_view" class="mdl-color--black mdl-shadow--2dp  mdl-cell--12-col mdl-grid">
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-1 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer1_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer1" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white  mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer2_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer2" style="display:none">0</span>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-2 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer2_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer2" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-3 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer3_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer3" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-4 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer4_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer4" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-5 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer5_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer5" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-6 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer6_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer6" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-7 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer7_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer7" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-8 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer8_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer8" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-9 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer9" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-10 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer10" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-11 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer11" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
+                            <div class="progress-number progress-number-12 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
+                            <div class="progress-seperate-line"></div>
+                            <div class="container vertical rounded mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                <div class="progress-bar">
+                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                    <div class="progress-track">
+                                        <div class="progress-fill">
+                                            <span id="customer12" style="display:none">0</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer3_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer3" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer4_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer4" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer5_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer5" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer6_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer6" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer7_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer7" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer8_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer8" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer9_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer9" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer9_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer10" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer9_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer11" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--1-col mdl-grid" style="margin-bottom: 0px;text-align:center;">
-                <div class="mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
-                <div class="container vertical rounded demo-graphs mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                    <div class="progress-bar">
-                        <p class="customer9_extend_time" style="display: none"></p>
-                        <div class="progress-track">
-                            <div class="progress-fill">
-                                <span id="customer12" style="display:none">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            </div>
 
-            <!--우측뷰-->
+                <!--우측뷰-->
 
-            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">           
-            <!--기본화면-->
-            <div id="default_view" style="display: block" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
-                <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                        <div align="center">
-                            <!-- Primary-colored flat button -->
-                            <button id="go_entry_view" class="mdl-button mdl-js-button mdl-button--primary">
-                                로고 사진
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--입장화면-->
-            <div id="entry_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
-                <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                        <div id="select_member_pad" align="center">
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            1
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            2
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            3
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            4
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            5
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            6
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            7
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            8
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            9
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            10
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            11
-                        </button>
-                        <button class="mdl-button mdl-js-button mdl-button--fab"style="margin: 5px;">
-                            12
-                        </button>
-                        </div>
-                        <hr>
-                        <div align="center">
-                            <span id="member_count" style="color: black;"><button class='mdl-button mdl-js-button mdl-button--raised' style="width: 50px; height:40px;"></button></span>
-                        </div>
-                        <hr>
-                        <div id="password_form" align="center">
-                        <!-- Numeric Textfield -->
-                        <form action="#">
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" id="sample2" style="border-bottom-color: black; font-size:24px; color:black; text-align: center;" >
-                                <label class="mdl-textfield__label" for="sample2">PASSWORD</label>
-                                <span class="mdl-textfield__error">Input is not a number!</span>
-                            </div>
-                        </form>
-                        </div>
-                        <div align="center">
-                            <!-- Primary-colored flat button -->
-                            <button id="add_customer" class="mdl-button mdl-js-button mdl-button--primary">
-                                추가
-                            </button>
-                            <!-- Accent-colored flat button -->
-                            <button id="back_to_home" class="mdl-button mdl-js-button mdl-button--accent">
-                                취소
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--알림화면-->
-            <div id="alert_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
-                <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50" style="padding:0px;width:100%;">
-                        <div>
-                            <div class="demo-card-event mdl-card mdl-shadow--2dp" style="width:100%;height:100%;">
-                                <div class="mdl-card__title mdl-card--expand" style="text-align: center; vertical-align: center; ">
-                                    <h4>
-                                        <span>n번 손님 입장하셨습니다.</span>
-                                    </h4>
-                                </div>
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <a style="text-align: center ">
-                                        2초 후 사라집니다.
-                                    </a>
+                <div class="right_view mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+                    <img id="go_entry_view" src="img/logo.png" style="background-color: transparent; height:70px; display: block; margin: 0 auto;"/>
+                    <p id="clock" align="right" class="mdl-cell--12-col" style="color:red;"></p>
+                    <!--기본화면-->
+                    <div id="default_view" style="display: block;" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                        <div style="background-color:grey;" class="demo-options mdl-card mdl-color--deep-grey-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text" style="color:white;">
+                                <div align="center">
+                                    <h5>Event</h5>
+                                    <hr>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-                <!--고객관리뷰-->
-                <div id="customer_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
-
-                    <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                        <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                            <div align="center">
-                                <span id="customer_id" style="color:black; font-size: large">n번 손님</span>
-                            </div>
-                            <hr>
-                            <div align="center">
-                                <!-- Primary-colored flat button -->
-                                <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
-                                <button id="remove_customer" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%">
-                                    이용 종료
-                                </button>
+                    <!--입장화면-->
+                    <div id="entry_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                        <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                                <div id="select_member_pad" align="center">
+                                    <h5 style="color:black;">다음 고객님 입장</h5>
+                                    <hr>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        1
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        2
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        3
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        4
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        5
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        6
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        7
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        8
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        9
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        10
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        11
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                        12
+                                    </button>
                                 </div>
-                                <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
-                                <button id="pop_beverage_alert_view" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%">
-                                    음료 나왔습니다.
-                                </button>
+                                <hr>
+                                <div id="password_form" align="center">
+                                    <!-- Numeric Textfield -->
+                                    <form action="#">
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            <input id="password" placeholder="비밀번호" class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" style="border-bottom-color: black; font-size:24px; color:black; text-align: center;"
+                                            />
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
-                                <button id="add_time" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%">
-                                    시간 추가
-                                </button>
-                                </div>
-                            </div>
-                            <hr>
-                            <div align="center">
-                                <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
-                                    <button class="go_to_home mdl-button mdl-js-button mdl-button--primary" style="width:100%">
-                                        홈으로
+                                <div align="center">
+                                    <!-- Primary-colored flat button -->
+                                    <button style="color:red; font-size:20px;" id="add_customer" class="mdl-button mdl-js-button mdl-button--primary">
+                                        입장
+                                    </button>
+                                    <!-- Accent-colored flat button -->
+                                    <button style="color:red; font-size:20px;" id="back_to_home" class="mdl-button mdl-js-button mdl-button--accent">
+                                        취소
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!--알림화면-->
+                    <div id="alert_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                        <div style="background-color:grey;" class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text" style="color:white;">
+                                <div style="padding-top:150px;">
+                                    <div align="center">
+                                        <h5>
+                                            n번 손님 입장하셨습니다
+                                        </h5>
+                                    </div>
+                                    <hr>
+                                    <div align="center">
+                                        2초 후 사라집니다
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--고객관리뷰-->
+                    <div id="customer_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+
+                        <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                                <div align="center">
+                                    <h5 id="customer_id" style="color:black; font-size: large">n번 손님</span>
+                                </div>
+                                <hr/>
+                                <div align="center">
+                                    <!-- Primary-colored flat button -->
+                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:50px;">
+                                        <button id="remove_customer" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:20px;">
+                                            이용 종료
+                                        </button>
+                                    </div>
+                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:50px;">
+                                        <button id="pop_beverage_alert_view" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:20px;">
+                                            음료 나왔습니다.
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr style="margin-top:50px;"/>
+                                <div align="center">
+                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
+                                        <button class="go_to_home mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:red; font-size:20px;">
+                                            취소
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <!--비밀번호 오류 화면-->
-            <div id="error_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
-                <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-                    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                        <div>
-                            <div class="demo-card-event mdl-card mdl-shadow--2dp">
-                                <div class="mdl-card__title mdl-card--expand">
-                                    <h4>
-                                        비밀번호 입력해주세요
-                                    </h4>
-                                </div>
-                                <div class="mdl-card__actions mdl-card--border">
-                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                                        2초 후 사라집니다.
-                                    </a>
-                                    <div class="mdl-layout-spacer"></div>
-                                    <i class="material-icons">event</i>
+                    <div id="error_view" style="display: none" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
+                        <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+                            <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+                                <div>
+                                    <div class="demo-card-event mdl-card mdl-shadow--2dp">
+                                        <div class="mdl-card__title mdl-card--expand">
+                                            <h4>
+                                                비밀번호 입력해주세요
+                                            </h4>
+                                        </div>
+                                        <div class="mdl-card__actions mdl-card--border">
+                                            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                                                2초 후 사라집니다.
+                                            </a>
+                                            <div class="mdl-layout-spacer"></div>
+                                            <i class="material-icons">event</i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
-        </div>
+    </div>
     </main>
-</div>
-<!--<a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;colored mdl-color-text&#45;&#45;white">View Source</a>-->
-<script type="text/javascript" th:src="@{/js/currentStatus.js}"></script>
-<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </div>
+    <!--<a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;colored mdl-color-text&#45;&#45;white">View Source</a>-->
+    <script type="text/javascript" th:src="@{/js/currentStatus.js}"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 </html>

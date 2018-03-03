@@ -17,7 +17,6 @@ $(document).ready(function () {
         _ISALERTEND = true,
         _playCustomerCount = 0,
         _playCustomerList = {},
-        _memberCountElement = $("#member_count"),
         _memberCountText = "",
         _selectedCustomerId,
         _emptyProgressId = 1;
@@ -35,6 +34,9 @@ $(document).ready(function () {
     }
 
     $("#go_entry_view").click(function () {
+        _alertView.hide();
+        _errorView.hide();
+        _customerView.hide();
         _defaultView.hide();
         _entryView.show();
     })
@@ -50,18 +52,19 @@ $(document).ready(function () {
     //인원 입력
     $("#select_member_pad").click(function (e) {
         if (e.target.tagName == 'BUTTON') {
-            _memberCountText = e.target.innerText;
-            modifyEntryView(_memberCountText);
+            $("#select_member_pad button").css("color","black");//나머지 버튼 컬러 아웃
+            $(e.target).css("color","red");
+            _memberCountText=e.target.innerText;
         }
     });
 
     //고객관리 뷰 팝업
-    $("#progress_view .demo-graphs").click(function (e) {
+    $("#progress_view .progress-number").click(function (e) {
         if (_ISALERTEND === true) {
-            var targetElement = e.target.getElementsByTagName("span")[0];
-            customerId = targetElement != null ? targetElement.id : "";//빈값 전달하여 수정작업 없도록 함
+            var targetElement = e.target
+            customerId = targetElement != null ? targetElement.innerText : "";//빈값 전달하여 수정작업 없도록 함
 
-            _selectedCustomerId = customerId.replace("customer", "");
+            _selectedCustomerId = customerId.replace("customer", "");//현재 선택한 숫자
 
             if (_playCustomerList[_selectedCustomerId] != null) {//이용중이지않은 progress bar disable
                 _defaultView.hide();
@@ -69,7 +72,7 @@ $(document).ready(function () {
                 _alertView.hide();
                 _errorView.hide();
                 _customerView.show();
-                _customerView.find("span").html(customerId.replace("customer", "") + "번 손님");
+                _customerView.find("h5").html(customerId.replace("customer", "") + "번 손님");
             }
         }
     });
@@ -78,8 +81,14 @@ $(document).ready(function () {
         addCustomer();
     });
 
-    function addCustomer() {
-        if (_playCustomerCount === MAXPLAYCUSTOMER) {
+    function addCustomer(e) {
+
+        var pwElementValue = $("#password").val();
+
+        if(Number.parseInt(pwElementValue)!=PASSWORD){
+            alert("비밀번호 입력해야함");
+        }
+        else if (_playCustomerCount === MAXPLAYCUSTOMER) {
             alert("입장 인원 초과");
         }
         else if (_memberCountText === "") {
@@ -89,9 +98,12 @@ $(document).ready(function () {
             _playCustomerCount += 1;
             //알림 화면 표시
             _ISALERTEND = false;
+            $("#select_member_pad button").css("color","black");//숫자 버튼 컬러 아웃
             _alertView.show();
-            _alertView.find("span").html(_emptyProgressId + "번 손님 <br> 입장하셨습니다.");
+            _alertView.find("h5").html(_emptyProgressId + "번 손님 <br><br> 입장하셨습니다");
             _entryView.css("display", "none");
+            $(".progress-number-"+_emptyProgressId).css("color","white");//번호 하얀색으로 활성화
+            $(".progress-track").eq(_emptyProgressId-1).css("background-color","white");//시작시 게이지 배경 하얀색으로 변경 (회색 게이지의 top이 감소하는 방향)
 
             setTimeout(function () {
                 _alertView.css("display", "none");
@@ -115,7 +127,7 @@ $(document).ready(function () {
                 });
             });
 
-            for (var index = 1; index < 13; index++) { // 리스트의 인덱스로 못돌림 -> 초기에는 index자체가 존재안하기 때문
+            for (var index = 1; index < 13; index++) { // 리스트의 인덱스로 못돌림 -> 초기에는 index자체가 존재안하기 때문, 1인덱스로시작하게끔해놨음
                 if (_playCustomerList[index] == null) {
                     _emptyProgressId = index;
                     break;
@@ -124,8 +136,7 @@ $(document).ready(function () {
 
             //초기화할 데이터
             _memberCountText = "";
-            modifyEntryView(_memberCountText);
-
+            $("input").val("");
         }
     }
 
@@ -135,12 +146,15 @@ $(document).ready(function () {
 
     function removeCustomer() {
         var oCustomer = _playCustomerList[_selectedCustomerId];
+        console.log(_selectedCustomerId);
 
         //알림 화면 표시
         _ISALERTEND = false;
-        _alertView.find("span").html(_selectedCustomerId + "번 손님 <br> 이용 마치셨습니다");
+        _alertView.find("h5").html(_selectedCustomerId + "번 님 <br><br> 이용 마치셨습니다");
         _alertView.show();
         _customerView.hide();
+        $(".progress-number-"+_selectedCustomerId).css("color","grey");//번호 회색으로 비활성화
+        $(".progress-track").eq(_selectedCustomerId-1).css("background-color","grey");//종료시 비활성화
 
         //종료시 해당 고객 데이터 저장
         $.ajax({
@@ -193,7 +207,7 @@ $(document).ready(function () {
     $("#pop_beverage_alert_view").click(function (e) {
         //알림 화면 표시
         _ISALERTEND = false;
-        _alertView.find("span").html(_selectedCustomerId + "번 손님 <br> 음료 준비되었습니다");
+        _alertView.find("h5").html(_selectedCustomerId + "번 손님 <br><br> 음료 준비되었습니다");
         _alertView.show();
         _customerView.hide();
 
@@ -206,23 +220,17 @@ $(document).ready(function () {
 
     $("#add_time").click(function (e) {
         var progressElementIndex = ".customer" + _selectedCustomerId + "_extend_time";
-        $(progressElementIndex).html("+13");//값 받아줘야함
+        $(progressElementIndex).html("+<br>13");//값 받아줘야함
         $(progressElementIndex).show();
     });
 
     $("#back_to_home").click(function () {
         //데이터 초기화
         _memberCountText = "";
-        modifyEntryView("");
 
         _entryView.css("display", "none");
         _defaultView.css("display", "block");
     })
-
-    function modifyEntryView(text) {
-        var currentCountElement = "<button class='mdl-button mdl-js-button mdl-button--raised'>" + text + "</button>"
-        _memberCountElement.html(currentCountElement);
-    }
 
     //상태변화 세팅
     var x = setInterval(function () {
@@ -251,7 +259,7 @@ $(document).ready(function () {
                 });
             } else {//끝난 고객의 progress bar 연장시간 세팅
                 if (oCustomer.extendTime === 0) {
-                    $(progressElementExtendTimeIndex).html("+0");
+                    $(progressElementExtendTimeIndex).html("+<br><span style='font-size:15px;'>0</span>");
                     $(progressElementExtendTimeIndex).css("text-color", "white");
                     $(progressElementExtendTimeIndex).show();
                 }
@@ -259,7 +267,7 @@ $(document).ready(function () {
                 oCustomer.extendTime += 30;//임의로 속도 빠르게 - 테스트용
                 var renderTime = oCustomer.extendTime / 60;
                 if (Number.isInteger(oCustomer.extendTime / 60)) {
-                    $(progressElementExtendTimeIndex).html("+" + renderTime);
+                    $(progressElementExtendTimeIndex).html("+<br><span style='font-size:15px;'>" + renderTime+"</span>");
                 }
             }
         }
