@@ -40,6 +40,7 @@
         }
 
         .vertical .progress-bar {
+            z-index:3;
             float: left;
             height: 100%;
             width: 100%;
@@ -85,7 +86,6 @@
         }
 
         .total_view {
-
             background-image: url("img/contentLine.png");
             background-size: 1920px 1080px;
             height: 1080px;
@@ -189,11 +189,15 @@
         }
 
         /* click effect */
-
-        .progress-number:active {
+        .progress-number-active {
+            font-size: 50px;
+            padding-bottom: 20px;
+            padding-top: 45px;
+            color: gray;
+        }
+        .progress-number-active:active {
             font-size: 70px;
             padding-bottom: 20px;
-            color: white;
         }
 
         .progress-track {
@@ -264,7 +268,7 @@
                         <div class="pad-black" style="margin-left: 90px;">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-1 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
+                                <div class="progress-number progress-number-active progress-number-1 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -281,7 +285,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-2 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
+                                <div class="progress-number progress-number-active progress-number-2 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -298,7 +302,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-3 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
+                                <div class="progress-number progress-number-active progress-number-3 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -315,7 +319,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-4 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
+                                <div class="progress-number progress-number-active progress-number-4 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -332,7 +336,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-5 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
+                                <div class="progress-number progress-number-active progress-number-5 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -349,7 +353,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-6 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
+                                <div class="progress-number progress-number-active progress-number-6 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -366,7 +370,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-7 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
+                                <div class="progress-number progress-number-active progress-number-7 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -383,7 +387,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-8 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
+                                <div class="progress-number progress-number-active progress-number-8 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -400,7 +404,7 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-9 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
+                                <div class="progress-number progress-number-active progress-number-9 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
@@ -417,11 +421,11 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-10 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
+                                <div class="progress-number progress-number-active progress-number-10 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
-                                        <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                        <p class="customer10_extend_time progress-extend-text" style="display: none"></p>
                                         <div class="progress-track">
                                             <div class="progress-fill">
                                                 <span id="customer10" style="display:none">0</span>
@@ -434,11 +438,11 @@
                         <div class="pad-black">
                             <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
                                 <div class="progress-img"></div>
-                                <div class="progress-number progress-number-11 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
+                                <div class="progress-number progress-number-active progress-number-11 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
                                 <div class="progress-seperate-line"></div>
                                 <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                                     <div class="progress-bar">
-                                        <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                        <p class="customer11_extend_time progress-extend-text" style="display: none"></p>
                                         <div class="progress-track">
                                             <div class="progress-fill">
                                                 <span id="customer11" style="display:none">0</span>
@@ -449,7 +453,7 @@
                             </div>
                         </div>
                         <!-- <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid"><div class="progress-img"></div>
-                        <div class="progress-number progress-number-12 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
+                        <div class="progress-number progress-number-active progress-number-12 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
                         <div class="progress-seperate-line"></div>
                         <div class="container vertical rounded mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
                             <div class="progress-bar">
@@ -470,7 +474,7 @@
                 <div class="right_view mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
                     <img id="go_entry_view" src="img/logo.png" style="height:80px; width:auto; display: block; margin:0 auto; padding-top:110px; padding-bottom:80px;"
                     />
-                    <p id="clock" align="right" class="mdl-cell--12-col" style="color:red; font-size:40px; margin:0px; height:40px;"></p>
+                    <p id="clock" align="right" class="mdl-cell--12-col" style="color:red; font-size:40px; margin:0px; height:40px; margin-right:10px;"></p>
                     <!--기본화면-->
                     <div id="default_view" style="display: block;" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                         <div style="background-color:grey;" class="demo-options mdl-card mdl-color--deep-grey-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
