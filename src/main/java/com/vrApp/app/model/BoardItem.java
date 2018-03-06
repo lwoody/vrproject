@@ -11,7 +11,7 @@ public class BoardItem {
 
 	@Id
 	public String id;
-	public String title, content, imageId, image, userName, date;	
+	public String title, content, imageId, image, userName, date;
 	public List<CommentItem> commentList = new ArrayList<>();
 	public int hits = 0;
 //	public MultipartFile imageFile;

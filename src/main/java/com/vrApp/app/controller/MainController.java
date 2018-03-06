@@ -15,8 +15,6 @@ import com.vrApp.app.service.CustomerService;
 import com.vrApp.app.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -92,19 +90,19 @@ public class MainController {
 		return "about";
 	}
 	
-	@RequestMapping(value="/show-album")
-	public String showAlbum(Model model) {
+	@RequestMapping(value="/show-board")
+	public String showBoard(Model model) {
 		
 		//sort by date(most recent board must show first) - replaced with mongodb repository api with id Desc
 		List<BoardItem> list = boardService.getPageList(0);//start and 6 items load
 //		Collections.sort(list, new DateComparator());
 		model.addAttribute("boardList", list );
 		
-		return "album";
+		return "board-item";
 	}
 	
-	@RequestMapping(value="/load-album", method=RequestMethod.POST)
-	public @ResponseBody List<BoardItem> loadAlbum(@RequestParam int start, HttpServletRequest request) {
+	@RequestMapping(value="/load-board-item", method=RequestMethod.POST)
+	public @ResponseBody List<BoardItem> loadBoardItem(@RequestParam int start, HttpServletRequest request) {
 		
 		List<BoardItem> list = boardService.getPageList(start);
 	

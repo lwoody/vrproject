@@ -32,11 +32,11 @@
             padding: 0px;
             overflow: hidden;
             float: left;
-            
+
         }
 
         .rounded {
-            height: 650px;
+            height: 750px;
         }
 
         .vertical .progress-bar {
@@ -55,7 +55,7 @@
         .vertical .progress-fill {
             position: relative;
             /* 회색 게이지 - top이 감소하는 방향 */
-            background: grey;
+            background-color: white;
             height: 50%;
             width: 100%;
             text-align: center;
@@ -70,35 +70,68 @@
 
         /*뷰비율 고정*/
 
+        body {
+            height: 1080px;
+            width: 1920px;
+        }
+
         .total-screen,
-        main,
-        .total_view {
+        main {
             background-color: black;
+            background-size: 1920px 1080px;
+            height: 1080px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .total_view {
+
+            background-image: url("img/contentLine.png");
+            background-size: 1920px 1080px;
+            height: 1080px;
+            margin: 0px;
+            padding: 0px;
         }
 
         .left_view {
             height: 100%;
-            background-color: black;
+            width: 1370px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: 0px;
+            z-index: 2;
         }
 
         .right_view {
             height: 100%;
-            background-color: transparent;
+            width: 550px;
+            margin: 0px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        #progress_view {
+            margin: 0px;
+            padding: 0px;
         }
 
         #alert_view,
         #default_view,
         #entry_view,
-        #error_view {
-            height: 500px;
+        #error_view,
+        #customer_view {
+            height: 700px;
+            width: 500px;
+            padding-top: 85px;
+            margin-right: 50px;
+            font-size: 40px;
         }
 
         .demo-options {
-            height: 500px;
+            height: 600px;
         }
 
         .mdl-card {
-            height: 500px;
+            height: 600px;
         }
 
         #progress_view {
@@ -125,44 +158,55 @@
         .mdl-layout__header {
             height: 10%;
             min-height: 0px;
-            background-color: black;
+            background-color: transparent;
         }
 
         .mdl-grid {
-            background-color: black;
+            background-color: transparent;
+        }
+
+        .pad-black {
+            /* background-color: rgba(0,0,0, 0.5); */
         }
 
         .progress-bar-wrapper {
             color: white;
             margin-bottom: 0px;
+            margin-left: 20px;
+            margin-right: 20px;
+            width: 70px;
+            height: 1080px;
             text-align: center;
             padding: 0px;
+
         }
 
         .progress-number {
-            font-size: 30px;
+            font-size: 50px;
             padding-bottom: 20px;
-            padding-top: 30px;
-            color: grey;
+            padding-top: 45px;
+            color: gray;
         }
 
         /* click effect */
 
         .progress-number:active {
-            font-size: 40px;
+            font-size: 70px;
             padding-bottom: 20px;
             color: white;
         }
 
         .progress-track {
-            background-color: grey;
+            background-color: transparent;
         }
 
         .progress-extend-text {
-            background-color: red;
-            height: 70px;
+            background-image: url("img/redTime.png");
+            background-size: 70px 750px;
+            height: 750px;
             /* +글자만 */
             font-size: 25px;
+
         }
 
         .progress-seperate-line {
@@ -173,12 +217,15 @@
             border-bottom: red solid 2px;
         }
 
-        body {
-            height: 100%;
+        .progress-img {
+            background: black;
+            height: 200px;
+            width: 70px;
         }
 
         h5 {
             margin-top: 0px;
+            font-size: 30px;
         }
 
         ::placeholder {
@@ -187,197 +234,248 @@
             opacity: 1;
             /* Firefox */
         }
+
+        .overlay {
+            position: absolute;
+            height: 1080px;
+            width: 1920px;
+        }
+
+        .mdl-card__supporting-text {
+            width: 94%;
+        }
+
+        .mdl-button--fab {
+            height: 70px;
+            width: 70px;
+        }
     </style>
 </head>
 
 <body>
+    <div class="overlay"></div>
     <div class="total-screen mdl-layout">
         <main class="mdl-color--grey-100">
+            <!-- <div style="height: 200px; width:1920px; background-color:black;"></div> -->
             <div class="total_view mdl-grid">
                 <div class="left_view mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet">
                     <!--고객상태바-->
-                    <div id="progress_view" class="mdl-color--black mdl-shadow--2dp  mdl-cell--12-col mdl-grid">
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-1 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer1_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer1" style="display:none">0</span>
+                    <div id="progress_view" class=" mdl-shadow--2dp  mdl-cell--12-col mdl-grid">
+                        <div class="pad-black" style="margin-left: 90px;">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-1 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">1</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer1_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer1" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-2 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer2_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer2" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-2 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">2</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer2_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer2" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-3 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer3_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer3" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-3 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">3</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer3_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer3" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-4 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer4_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer4" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-4 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">4</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer4_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer4" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-5 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer5_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer5" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-5 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">5</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer5_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer5" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-6 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer6_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer6" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-6 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">6</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer6_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer6" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-7 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer7_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer7" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-7 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">7</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer7_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer7" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-8 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer8_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer8" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-8 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">8</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer8_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer8" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-9 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer9" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-9 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">9</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer9" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-10 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer10" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-10 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">10</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer10" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-11 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded  mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer11" style="display:none">0</span>
+                        <div class="pad-black">
+                            <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid">
+                                <div class="progress-img"></div>
+                                <div class="progress-number progress-number-11 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">11</div>
+                                <div class="progress-seperate-line"></div>
+                                <div class="container vertical rounded  mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                                    <div class="progress-bar">
+                                        <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                        <div class="progress-track">
+                                            <div class="progress-fill">
+                                                <span id="customer11" style="display:none">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress-bar-wrapper mdl-shadow--1dp mdl-color--black mdl-cell--1-col mdl-grid">
-                            <div class="progress-number progress-number-12 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
-                            <div class="progress-seperate-line"></div>
-                            <div class="container vertical rounded mdl-shadow--1dp mdl-color--white mdl-cell--12-col mdl-grid" style="text-align: center;">
-                                <div class="progress-bar">
-                                    <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
-                                    <div class="progress-track">
-                                        <div class="progress-fill">
-                                            <span id="customer12" style="display:none">0</span>
-                                        </div>
+                        <!-- <div class="progress-bar-wrapper mdl-shadow--1dp  mdl-cell--1-col mdl-grid"><div class="progress-img"></div>
+                        <div class="progress-number progress-number-12 mdl-cell--12-col" style="text-align:center; width: 100%; margin-left: 0px; margin-right: 0px;">12</div>
+                        <div class="progress-seperate-line"></div>
+                        <div class="container vertical rounded mdl-shadow--1dp  mdl-cell--12-col mdl-grid" style="text-align: center;">
+                            <div class="progress-bar">
+                                <p class="customer9_extend_time progress-extend-text" style="display: none"></p>
+                                <div class="progress-track">
+                                    <div class="progress-fill">
+                                        <span id="customer12" style="display:none">0</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div> -->
                     </div>
                 </div>
 
                 <!--우측뷰-->
 
                 <div class="right_view mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
-                    <img id="go_entry_view" src="img/logo.png" style="background-color: transparent; height:70px; display: block; margin: 0 auto;"/>
-                    <p id="clock" align="right" class="mdl-cell--12-col" style="color:red;"></p>
+                    <img id="go_entry_view" src="img/logo.png" style="height:80px; width:auto; display: block; margin:0 auto; padding-top:110px; padding-bottom:80px;"
+                    />
+                    <p id="clock" align="right" class="mdl-cell--12-col" style="color:red; font-size:40px; margin:0px; height:40px;"></p>
                     <!--기본화면-->
                     <div id="default_view" style="display: block;" class="demo-cards mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid mdl-grid--no-spacing">
                         <div style="background-color:grey;" class="demo-options mdl-card mdl-color--deep-grey-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                             <div class="mdl-card__supporting-text" style="color:white;">
-                                <div align="center">
+                                <div align="center" style="padding-top:30px;">
                                     <h5>Event</h5>
                                     <hr>
                                 </div>
@@ -389,62 +487,61 @@
                         <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                             <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
                                 <div id="select_member_pad" align="center">
-                                    <h5 style="color:black;">다음 고객님 입장</h5>
-                                    <hr>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <h5 style="color:black; padding-top:30px;">다음 고객님 입장</h5>
+                                    <hr style="background-color:black;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         1
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         2
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         3
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         4
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         5
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         6
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         7
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         8
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         9
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         10
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
                                         11
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 5px;">
-                                        12
-                                    </button>
+                                    <!-- <button class="mdl-button mdl-js-button mdl-button--fab" style="margin: 10px;">
+                                    12
+                                </button> -->
                                 </div>
-                                <hr>
                                 <div id="password_form" align="center">
                                     <!-- Numeric Textfield -->
                                     <form action="#">
                                         <div class="mdl-textfield mdl-js-textfield">
-                                            <input id="password" placeholder="비밀번호" class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" style="border-bottom-color: black; font-size:24px; color:black; text-align: center;"
+                                            <input id="password" placeholder="비밀번호" class="mdl-textfield__input" type="password" pattern="-?[0-9]*(\.[0-9]+)?" style="border-bottom-color: black; font-size:30px; color:black; text-align: center;"
                                             />
                                         </div>
                                     </form>
                                 </div>
-                                <div align="center">
+                                <div align="center" style="margin-top:10px;">
                                     <!-- Primary-colored flat button -->
-                                    <button style="color:red; font-size:20px;" id="add_customer" class="mdl-button mdl-js-button mdl-button--primary">
+                                    <button style="color:red; font-size:30px; margin-right:20px;" id="add_customer" class="mdl-button mdl-js-button mdl-button--primary">
                                         입장
                                     </button>
                                     <!-- Accent-colored flat button -->
-                                    <button style="color:red; font-size:20px;" id="back_to_home" class="mdl-button mdl-js-button mdl-button--accent">
+                                    <button style="color:red; font-size:30px; margin-left:20px;" id="back_to_home" class="mdl-button mdl-js-button mdl-button--accent">
                                         취소
                                     </button>
                                 </div>
@@ -461,8 +558,8 @@
                                             n번 손님 입장하셨습니다
                                         </h5>
                                     </div>
-                                    <hr>
-                                    <div align="center">
+                                    <hr style="margin-bottom:10px;">
+                                    <div align="center" style="font-size: 30px; margin-top:50px;">
                                         2초 후 사라집니다
                                     </div>
                                 </div>
@@ -474,28 +571,28 @@
 
                         <div class="demo-options mdl-card mdl-color--deep-white-500 mdl-shadow--2dp mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
                             <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-                                <div align="center">
-                                    <h5 id="customer_id" style="color:black; font-size: large">n번 손님</span>
+                                <div align="center" style="padding-top:30px;">
+                                    <h5 id="customer_id" style="color:black;">n번 손님</span>
                                 </div>
-                                <hr/>
+                                <hr style="background-color: black;" />
                                 <div align="center">
                                     <!-- Primary-colored flat button -->
-                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:50px;">
-                                        <button id="remove_customer" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:20px;">
+                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:70px;">
+                                        <button id="remove_customer" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:30px;">
                                             이용 종료
                                         </button>
                                     </div>
-                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:50px;">
-                                        <button id="pop_beverage_alert_view" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:20px;">
+                                    <div class="mdl-cell" style="width: 100%; margin-left: 0px; margin-top:70px;">
+                                        <button id="pop_beverage_alert_view" class="mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:black; font-size:30px;">
                                             음료 나왔습니다.
                                         </button>
                                     </div>
                                 </div>
-                                <hr style="margin-top:50px;"/>
+                                <div style="margin-top:210px;" />
                                 <div align="center">
                                     <div class="mdl-cell" style="width: 100%; margin-left: 0px;">
-                                        <button class="go_to_home mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:red; font-size:20px;">
-                                            취소
+                                        <button class="go_to_home mdl-button mdl-js-button mdl-button--primary" style="width:100%; color:red; font-size:30px;">
+                                            취소하기
                                         </button>
                                     </div>
                                 </div>
@@ -527,8 +624,8 @@
                     </div>
                 </div>
             </div>
-    </div>
     </main>
+</div>
     </div>
     <!--<a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;colored mdl-color-text&#45;&#45;white">View Source</a>-->
     <script type="text/javascript" th:src="@{/js/currentStatus.js}"></script>

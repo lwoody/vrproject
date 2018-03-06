@@ -13,7 +13,6 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Autowired
     UserDetailsService userDetailsService ;
 
