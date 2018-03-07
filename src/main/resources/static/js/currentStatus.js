@@ -29,6 +29,7 @@ $(document).ready(function () {
         if (cachedObjet != null) {
             var jsonCustomer = JSON.parse(cachedObjet);
             _playCustomerList[index] = jsonCustomer;
+            $(".progress-number-" + index).css("color", "white");//번호 하얀색으로 활성화
             if (jsonCustomer.remainTime === 0) {//남은 시간 0이면 추가 시간 표시로!
                 //상단 + 추가 이용 표시
                 $(".progress-img").eq(index - 1).css("background-image", 'url("img/addPlus.png")');
@@ -100,6 +101,10 @@ $(document).ready(function () {
         addCustomer();
     });
 
+    $("#remove_customer").click(function (e) {
+        removeCustomer();
+    });
+
     function addCustomer(e) {
 
         var pwElementValue = $("#password").val();
@@ -121,7 +126,7 @@ $(document).ready(function () {
             }
 
             //progress view 처리 및 고객리스트에 푸쉬
-            var oCustomer = new OCustomer(_memberCountText, 100),//번호, 이용할시간(현재는 퍼센티지)
+            var oCustomer = new OCustomer(_memberCountText, 100),//인원수(현재 안쓰임), 이용할시간(퍼센티지)
                 customerListIndex = _progressId;
             progressElementIndex = "#customer" + customerListIndex;
             _playCustomerList[customerListIndex] = oCustomer;
@@ -129,9 +134,9 @@ $(document).ready(function () {
             $(progressElementIndex).text(oCustomer.remainTime + "%");
             $(progressElementIndex).each(function () {
                 var percent = $(this).html();
-                var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";//회색이 게이지가 증가
+                var height = 100 - (percent.slice(0, percent.length - 1)) + "%";//하얀색 height 수치 감소 방향
                 $(this).parent().css({
-                    'height': pTop,
+                    'height': height,
                     //'top': pTop
                 });
             });
@@ -145,7 +150,6 @@ $(document).ready(function () {
             _alertView.find("h5").html(_progressId + "번 손님 <br><br> 입장하셨습니다");
             _entryView.css("display", "none");
             $(".progress-number-" + _progressId).css("color", "white");//번호 하얀색으로 활성화
-            //$(".progress-track").eq(_emptyProgressId-1).css("background-color","transparent");//시작시 게이지 배경 하얀색으로 변경 (회색 게이지의 top이 증가하는 방향)
 
             setTimeout(function () {
                 _alertView.css("display", "none");
@@ -159,13 +163,8 @@ $(document).ready(function () {
         }
     }
 
-    $("#remove_customer").click(function (e) {
-        removeCustomer();
-    });
-
     function removeCustomer() {
         var oCustomer = _playCustomerList[_selectedCustomerId];
-        console.log(_selectedCustomerId);
 
         //알림 화면 표시
         _ISALERTEND = false;
@@ -176,7 +175,6 @@ $(document).ready(function () {
 
         //종료시 해당 고객 데이터 저장
         $.ajax({
-
             type: 'POST',
             url: "/saveCustomer",
             dataType: 'json',
@@ -191,21 +189,6 @@ $(document).ready(function () {
             },
             success: function (response) {
                 console.log(response);
-                //로컬캐시 삭제
-                localStorage.removeItem("customer" + _selectedCustomerId);
-                console.log(localStorage.getItem("customer" + _selectedCustomerId));
-
-                var progressElementIndex = "#customer" + _selectedCustomerId;
-                $(progressElementIndex).html("0");//0으로
-
-                $(progressElementIndex).each(function () {
-                    $(this).parent().css({
-                        'height': "0%"//회색 게이지 top 0%
-                    });
-                });
-
-                _playCustomerList[_selectedCustomerId] = null;
-                _playCustomerCount -= 1;
 
                 setTimeout(function () {
                     _alertView.hide()
@@ -213,9 +196,26 @@ $(document).ready(function () {
                     _ISALERTEND = true;
                 }, 1500);
 
+                //로컬캐시 삭제
+                localStorage.removeItem("customer" + _selectedCustomerId);
+
+                //게이지 초기화
+                var progressElementIndex = "#customer" + _selectedCustomerId;
+                $(progressElementIndex).html("0");//0으로
+
+                $(progressElementIndex).each(function () {
+                    $(this).parent().css({
+                        'height': "0%"//하얀색 게이지 height 0
+                    });
+                });
+
+                //데이터 수정
+                _playCustomerList[_selectedCustomerId] = null;
+                _playCustomerCount -= 1;
+
                 //추가시간있었을 경우
-                var progressElementIndex = ".customer" + _selectedCustomerId + "_extend_time";
-                $(progressElementIndex).hide();
+                var progressExtendIndex = ".customer" + _selectedCustomerId + "_extend_time";
+                $(progressExtendIndex).hide();
                 //상단 표시 -> 검은색
                 $(".progress-img").eq(_selectedCustomerId - 1).css("background-image", '');
 
@@ -227,32 +227,35 @@ $(document).ready(function () {
     }
 
     $("#pop_beverage_alert_view").click(function (e) {
+
         //알림 화면 표시
         _ISALERTEND = false;
         _alertView.find("h5").html(_selectedCustomerId + "번 손님 <br><br> 음료 준비되었습니다");
         _alertView.show();
         _customerView.hide();
-        //상단 + 추가 이용 표시
-        $(".progress-img").eq(_selectedCustomerId - 1).css("background-image", 'url("img/beverage.png")');
-        $(".progress-img").eq(_selectedCustomerId - 1).css("background-size", "70px 200px");
 
         setTimeout(function () {
             _alertView.hide()
             _defaultView.show();
             _ISALERTEND = true;
         }, 2000);
+
+        //상단 음료 표시
+        $(".progress-img").eq(_selectedCustomerId - 1).css("background-image", 'url("img/beverage.png")');
+        $(".progress-img").eq(_selectedCustomerId - 1).css("background-size", "70px 200px");
+
     });
 
-    $("#add_time").click(function (e) {
-        var progressElementIndex = ".customer" + _selectedCustomerId + "_extend_time";
-        $(progressElementIndex).html("+<br>13");//값 받아줘야함
-        $(progressElementIndex).show();
-    });
+    //시간 추가하기 - 현재 안쓰임
+    // $("#add_time").click(function (e) {
+    //     var progressElementIndex = ".customer" + _selectedCustomerId + "_extend_time";
+    //     $(progressElementIndex).html("+<br>13");//값 받아줘야함
+    //     $(progressElementIndex).show();
+    // });
 
     $("#back_to_home").click(function () {
         //데이터 초기화
         _memberCountText = "";
-
         _entryView.css("display", "none");
         _defaultView.css("display", "block");
     })
@@ -261,7 +264,7 @@ $(document).ready(function () {
     var x = setInterval(function () {
         //시계
         var date = new Date();
-        document.getElementById("clock").innerHTML = "현재시각 " + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+        document.getElementById("clock").innerHTML = "현재시각 " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
 
         //progress bar
         //0시간으로 완료된 고객도 직접 이용종료 누르지 않는한 객체 삭제 안됨
@@ -277,29 +280,27 @@ $(document).ready(function () {
                 //소모되는 비율 계산해야함. 우선 1
                 //oCustomer.remainTime-=0.023809;//100:4200second = x:1second
                 oCustomer.remainTime -= 20;//임의로 속도 빠르게 - 테스트 용
-                var pTop = (0 + oCustomer.remainTime) + "%";
+                var height = (0 + oCustomer.remainTime) + "%";
                 $(progressElementIndex).each(function () {
                     $(this).parent().css({
-                        'height': pTop
+                        'height': height
                     });
                 });
-                //로컬 브라우저에 캐시 - 5mb이상
+                //로컬 브라우저에 캐시 - 약 5mb 제한
                 localStorage.setItem("customer" + index, JSON.stringify(oCustomer));
-                console.log(JSON.parse(localStorage.getItem("customer" + index)).remainTime);
 
             } else {
                 if (oCustomer.extendTime > 0) {
-                    //oCustomer.extendTime+=1;//1초씩 더함
-                    oCustomer.extendTime += 30;//임의로 속도 빠르게 - 테스트용
                     var renderTime = oCustomer.extendTime / 60;
                     if (Number.isInteger(oCustomer.extendTime / 60)) {
                         $(progressElementExtendTimeIndex).html("<span style='font-size:40px;'><br><br>+<br><br>" + renderTime + "</span>");
-
-                        //로컬 브라우저에 캐시 - 5mb이상
+                        //로컬 브라우저에 캐시
                         localStorage.setItem("customer" + index, JSON.stringify(oCustomer));
                     }
+                    //oCustomer.extendTime+=1;//1초씩 더함
+                    oCustomer.extendTime += 30;//임의로 속도 빠르게 - 테스트용
                 }
-                else if (oCustomer.extendTime === 0) {//끝난 고객의 progress bar 연장시간 세팅
+                else if (oCustomer.extendTime === 0) {//고객의 progress bar 연장시간 세팅
                     $(progressElementExtendTimeIndex).html("<span style='font-size:40px;'><br><br>+<br><br>0</span>");
                     $(progressElementExtendTimeIndex).css("text-color", "white");
                     //상단 + 추가 이용 표시
@@ -325,11 +326,10 @@ $(document).ready(function () {
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (response) {
-                    console.log("still connection!");
+                    console.log("still connection exist");
                 }
             });
         }
-
     }, 1000);
 
     //고객 progress bar 초기 세팅 - 혹시 모를 페이지 리로딩 대비해 서버에서 가져와야함_데이터를 로드해서 적용하기
