@@ -6,14 +6,13 @@ $(document).ready(function () {
 
     //우측 view template
     var _defaultView = $("#default_view"),
-        _entryView = $("#entry_view");
-    _alertView = $("#alert_view");
-    _errorView = $("#error_view");
-    _customerView = $("#customer_view");
+        _entryView = $("#entry_view"),
+        _alertView = $("#alert_view"),
+        _errorView = $("#error_view"),
+        _customerView = $("#customer_view");
 
     //기본 데이터
-    var PASSWORD = 1234,
-        MAXPLAYCUSTOMER = 12,
+    var MAXPLAYCUSTOMER = 12,
         CONNECTIONTIME = 0,
         _ISALERTEND = true,
         _playCustomerCount = 0,
@@ -43,28 +42,29 @@ $(document).ready(function () {
 
     //고객 생성자
     function OCustomer(memberCount, remainTime) {
-        var currentDate = new Date().toISOString();
+        var currentDate = new Date();
         return {
             id:0,//서버에서 생성해 받아옴
             memberCount: memberCount,
-            startDate: currentDate,
+            startDate: currentDate.toISOString().substring(0, 10),
             remainTime: remainTime,//이용시간 % 단위
             extendTime: 0,//연장시간 second 단위
             //isBeverageOrdered:
-            // startTime: (currentDate.getHours() < 10 ? "0" + currentDate.getHours() : currentDate.getHours()) + ":" + (currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes()),
+            startTime: getCurrentTime(),
             endTime: 0,
             beverageTime: 0,
             customerNo:0,
         }
     }
 
-    $("#go_entry_view").click(function () {
-        _alertView.hide();
-        _errorView.hide();
-        _customerView.hide();
-        _defaultView.hide();
-        _entryView.show();
-    })
+    //로고 클릭 스펙 아웃
+    // $("#go_entry_view").click(function () {
+    //     _alertView.hide();
+    //     _errorView.hide();
+    //     _customerView.hide();
+    //     _defaultView.hide();
+    //     _entryView.show();
+    // })
 
     $(".go_to_home").click(function () {
         _entryView.hide();
@@ -86,24 +86,35 @@ $(document).ready(function () {
     //고객관리 뷰 팝업
     $("#progress_view .progress-number").click(function (e) {
         if (_ISALERTEND === true) {
-            var targetElement = e.target
-            customerId = targetElement != null ? targetElement.innerText : "";//빈값 전달하여 수정작업 없도록 함
+            var targetElement = e.target;
+            var customerId = targetElement != null ? targetElement.innerText : "";//빈값 전달하여 수정작업 없도록 함
 
             _selectedCustomerId = customerId.replace("customer", "");//현재 선택한 숫자
 
-            if (_playCustomerList[_selectedCustomerId] != null) {//이용중이지않은 progress bar disable
+            if (_playCustomerList[_selectedCustomerId] != null) {//이용중인 progress bar
                 _defaultView.hide();
                 _entryView.hide();
                 _alertView.hide();
                 _errorView.hide();
                 _customerView.show();
                 _customerView.find("h5").html(customerId.replace("customer", "") + "번 손님");
+            }else{//이용하지 않는 progress bar 케이스 - 로고 클릭 로직을 변경하기
+                _alertView.hide();
+                _errorView.hide();
+                _customerView.hide();
+                _defaultView.hide();
+                _entryView.find("h5").html(customerId.replace("customer", ""));
+                _entryView.show();
             }
         }
     });
 
-    $("#add_customer").click(function (e) {
-        addCustomer();
+    $("#add_customer").click(function (e) {//70분 버튼
+        addCustomer(e);
+    });
+
+    $("#add_ten_min").click(function (e) {//10분 버튼
+        addCustomer(e);
     });
 
     $("#remove_customer").click(function (e) {
@@ -112,68 +123,67 @@ $(document).ready(function () {
 
     function addCustomer(e) {
 
-        var pwElementValue = $("#password").val();
+        var targetElement = e.target;
+        var buttonTimeValue = targetElement != null ? targetElement.innerText : "";
+        var TIME_PERCENTAGE = buttonTimeValue == "70" ? 100 : 14.2857142857;
+        _progressId = _selectedCustomerId;
 
-        if (Number.parseInt(pwElementValue) != PASSWORD) {
-            alert("비밀번호 입력해야함");
-        }
-        else if (_playCustomerCount === MAXPLAYCUSTOMER) {
+        if (_playCustomerCount === MAXPLAYCUSTOMER) {//바뀐 ui 스펙으로는 불필요해짐 - 추후 제거
             alert("입장 인원 초과");
         }
-        else if (_progressId === "") {
-            alert("번호 입력해라");
-        }
+        // else if (_progressId === "") {
+        //     alert("번호 입력해라");
+        // }
         else {
 
-            if (_playCustomerList[_progressId] != null) {
-                alert("이미 사용 중 입니다.");
-                return;
-            }
+            // if (_playCustomerList[_progressId] != null) {
+            //     alert("이미 사용 중 입니다.");
+            //     return;
+            // }
 
-            //고객 객체 생성
-            var oCustomer = new OCustomer(_memberCountText, 100);//인원수(현재 안쓰임), 이용할시간(퍼센티지)
-
-            // $.ajax({
-            //     type: 'POST',
-            //     url: "/entrySaveCustomer",
-            //     dataType: 'json',
-            //     data: {
-            //         //"memberCount": oCustomer.memberCount,
-            //         "startDate": oCustomer.startDate,
-            //         "startTime": oCustomer.startTime,
-            //         "customerNo":oCustomer.customerNo
-            //     },
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader(header, token);
-            //     },
-            //     success: function (response) {//response에 id값 담아오기
-            //         console.log("fdsafda");
-            //
-            //     }
-            // });
-
-            //progress view 처리 및 고객리스트에 푸쉬
-            var customerListIndex = _progressId;
+            //고객 객체 생성 및 사전 처리
+            var oCustomer = new OCustomer(_memberCountText, TIME_PERCENTAGE),//인원수(현재 안쓰임), 이용할시간(퍼센티지)
+                customerListIndex = _progressId;
             progressElementIndex = "#customer" + customerListIndex;
             oCustomer.customerNo = customerListIndex;
 
-            _playCustomerList[customerListIndex] = oCustomer;
+            _playCustomerCount += 1;
 
+            $.ajax({
+                type: 'POST',
+                url: "/entrySaveCustomer",
+                dataType: 'json',
+                data: {
+                    //"memberCount": oCustomer.memberCount,
+                    "startDate": oCustomer.startDate,
+                    "startTime": oCustomer.startTime,
+                    "customerNo": oCustomer.customerNo,
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (response) {//response에 id값 담아오기
+                    var responseObject = JSON.parse(response);
+                    oCustomer.id = responseObject.id;
+                    _playCustomerList[customerListIndex] = oCustomer;//현재 고객 리스트에 추가
+                }
+            });
+
+            //progress view 처리
             $(progressElementIndex).text(oCustomer.remainTime + "%");
             $(progressElementIndex).each(function () {
-                var percent = $(this).html();
-                var height = 100 - (percent.slice(0, percent.length - 1)) + "%";//하얀색 height 수치 감소 방향
+                //var percent = $(this).html();
+                var height = (0 + oCustomer.remainTime) + "%";//하얀색 height 수치 감소 방향
                 $(this).parent().css({
                     'height': height,
                     //'top': pTop
                 });
             });
 
-            _playCustomerCount += 1;
-
             //알림 화면 표시
             _ISALERTEND = false;
-            $("#select_member_pad button").css("color", "black");//숫자 버튼 컬러 아웃
+            //$("#select_member_pad button").css("color", "black");//숫자 버튼 컬러 아웃
+            console.log(_alertView);
             _alertView.show();
             _alertView.find("h5").html(_progressId + "번 손님 <br><br> 입장하셨습니다");
             _entryView.css("display", "none");
@@ -208,9 +218,11 @@ $(document).ready(function () {
             dataType: 'json',
             data: {
                 //"memberCount": oCustomer.memberCount,
-                "startDate": oCustomer.startDate,
+                "id": oCustomer.id,
                 "remainTime": oCustomer.remainTime.toString(),
                 "extendTime": oCustomer.extendTime / 60,//minute 단위
+                "beverageTime": oCustomer.beverageTime,
+                "endTime": oCustomer.endTime,
             },
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
@@ -262,6 +274,10 @@ $(document).ready(function () {
         _alertView.show();
         _customerView.hide();
 
+        //음료 제공 시간 캐시
+        var oCustomer = _playCustomerList[_selectedCustomerId]
+        oCustomer.beverageTime = getCurrentTime();
+
         setTimeout(function () {
             _alertView.hide()
             _defaultView.show();
@@ -291,8 +307,7 @@ $(document).ready(function () {
     //상태변화 세팅
     var x = setInterval(function () {
         //시계
-        var date = new Date();
-        document.getElementById("clock").innerHTML = "현재시각 " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
+        document.getElementById("clock").innerHTML = getCurrentTime();
 
         //progress bar
         //0시간으로 완료된 고객도 직접 이용종료 누르지 않는한 객체 삭제 안됨
@@ -369,5 +384,10 @@ $(document).ready(function () {
             //'top': pTop
         });
     });
+
+    function getCurrentTime() {
+        var currentDate = new Date();
+        return (currentDate.getHours() < 10 ? "0" + currentDate.getHours() : currentDate.getHours()) + ":" + (currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes());
+    }
 
 });

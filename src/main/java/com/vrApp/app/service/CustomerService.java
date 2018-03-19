@@ -16,12 +16,20 @@ public class CustomerService {
 	@Autowired
 	private CustomerDao dao;
 	
-	public Customer getCustomerById(Customer customer) {
-		return dao.getCustomerById(customer);
+	public Customer getCustomerByTempId(Customer customer) {
+		return dao.getCustomerByTempId(customer);
+	}
+
+	public Customer getCustomerById(String id){
+		return dao.getCustomerById(id);
+	}
+
+	public void update(Customer customer){
+		dao.update(customer);
 	}
 	
-	public void insert(Customer Customer) {
-		dao.insert(Customer);
+	public void insert(Customer customer) {
+		dao.insert(customer);
 	}
 	
 	public void deleteAll() {

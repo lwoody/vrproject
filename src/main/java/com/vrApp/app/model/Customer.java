@@ -3,10 +3,13 @@ package com.vrApp.app.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document(collection = "customers")
 public class Customer {
 
-    public String id;
+    public String id;//mongoId
+    public String tempId = UUID.randomUUID().toString();
     public String memberCount;//현재 사용 안함
     public String startDate;//yymmdd
     public String remainTime;
@@ -16,6 +19,7 @@ public class Customer {
     public String endTime;
     public String beverageTime;
     public String customerNo;
+    public String bUsing = "0";
 
     public Customer() {}
 
@@ -103,6 +107,22 @@ public class Customer {
 
     public void setCustomerNo(String customerNo) {
         this.customerNo = customerNo;
+    }
+
+    public String getTempId() {
+        return tempId;
+    }
+
+    public void setTempId(String tempId) {
+        this.tempId = tempId;
+    }
+
+    public String getbUsing() {
+        return bUsing;
+    }
+
+    public void setbUsing(String bUsing) {
+        this.bUsing = bUsing;
     }
 
     @Override

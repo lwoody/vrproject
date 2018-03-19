@@ -44,9 +44,13 @@ public class CustomerDao {
 	}
 
 
-	public Customer getCustomerById(Customer customer) {
+	public Customer getCustomerByTempId(Customer customer) {//tempId로 찾기
 		// TODO Auto-generated method stub
-		return repository.findById(customer.id);
+		return repository.findByTempId(customer.tempId);
+	}
+
+	public Customer getCustomerById(String id){
+		return repository.findById(id);
 	}
 	
 }
