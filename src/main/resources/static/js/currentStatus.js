@@ -22,7 +22,7 @@ $(document).ready(function () {
         _selectedCustomerId,
         _progressId = 1;
 
-    //localStorage.clear();
+    localStorage.clear();
     //리로딩일 경우 캐시된 데이터 저장
     for (var index = 1; index < 12; index++) {
         var cachedObjet = localStorage.getItem("customer" + index);
@@ -45,11 +45,16 @@ $(document).ready(function () {
     function OCustomer(memberCount, remainTime) {
         var currentDate = new Date().toISOString();
         return {
+            id:0,//서버에서 생성해 받아옴
             memberCount: memberCount,
             startDate: currentDate,
             remainTime: remainTime,//이용시간 % 단위
             extendTime: 0,//연장시간 second 단위
             //isBeverageOrdered:
+            // startTime: (currentDate.getHours() < 10 ? "0" + currentDate.getHours() : currentDate.getHours()) + ":" + (currentDate.getMinutes() < 10 ? "0" + currentDate.getMinutes() : currentDate.getMinutes()),
+            endTime: 0,
+            beverageTime: 0,
+            customerNo:0,
         }
     }
 
@@ -125,10 +130,33 @@ $(document).ready(function () {
                 return;
             }
 
+            //고객 객체 생성
+            var oCustomer = new OCustomer(_memberCountText, 100);//인원수(현재 안쓰임), 이용할시간(퍼센티지)
+
+            // $.ajax({
+            //     type: 'POST',
+            //     url: "/entrySaveCustomer",
+            //     dataType: 'json',
+            //     data: {
+            //         //"memberCount": oCustomer.memberCount,
+            //         "startDate": oCustomer.startDate,
+            //         "startTime": oCustomer.startTime,
+            //         "customerNo":oCustomer.customerNo
+            //     },
+            //     beforeSend: function (xhr) {
+            //         xhr.setRequestHeader(header, token);
+            //     },
+            //     success: function (response) {//response에 id값 담아오기
+            //         console.log("fdsafda");
+            //
+            //     }
+            // });
+
             //progress view 처리 및 고객리스트에 푸쉬
-            var oCustomer = new OCustomer(_memberCountText, 100),//인원수(현재 안쓰임), 이용할시간(퍼센티지)
-                customerListIndex = _progressId;
+            var customerListIndex = _progressId;
             progressElementIndex = "#customer" + customerListIndex;
+            oCustomer.customerNo = customerListIndex;
+
             _playCustomerList[customerListIndex] = oCustomer;
 
             $(progressElementIndex).text(oCustomer.remainTime + "%");
@@ -176,7 +204,7 @@ $(document).ready(function () {
         //종료시 해당 고객 데이터 저장
         $.ajax({
             type: 'POST',
-            url: "/saveCustomer",
+            url: "/endSaveCustomer",
             dataType: 'json',
             data: {
                 //"memberCount": oCustomer.memberCount,

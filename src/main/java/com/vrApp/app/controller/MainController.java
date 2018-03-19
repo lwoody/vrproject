@@ -226,8 +226,8 @@ public class MainController {
 		return "currentStatus";
 	}
 
-	@PostMapping(value="/saveCustomer")
-	public @ResponseBody boolean saveCustomer(
+	@PostMapping(value="/endSaveCustomer")
+	public @ResponseBody boolean endSaveCustomer(
 			// @RequestParam("memberCount") String memberCount,
 			@RequestParam("startDate") String startDate,
 			@RequestParam("extendTime") String extendTime,
@@ -241,6 +241,23 @@ public class MainController {
 		customerService.insert(customerDO);
 		return true;
 	}
+
+//	@PostMapping(value="/entrySaveCustomer")
+//	public @ResponseBody boolean entrySaveCustomer(
+//			// @RequestParam("memberCount") String memberCount,
+//			@RequestParam("startDate") String startDate,
+//			@RequestParam("startTime") String startTime,
+//			@RequestParam("customerNo") String customerNo, HttpServletRequest request){
+//
+//		Customer customerDO = new Customer();
+//		// customerDO.setMemberCount(memberCount);
+//		customerDO.setStartTime(startTime);
+//		customerDO.setCustomerNo(customerNo);
+//		customerDO.setStartDate(startDate);
+//		customerService.insert(customerDO);
+//
+//		return true;
+//	}
 
 	@PostMapping(value="/makeConnection")
 	public @ResponseBody boolean makeConnection(){

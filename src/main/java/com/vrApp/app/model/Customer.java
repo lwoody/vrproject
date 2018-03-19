@@ -7,11 +7,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Customer {
 
     public String id;
-    public String memberCount;
-    public String startDate;
+    public String memberCount;//현재 사용 안함
+    public String startDate;//yymmdd
     public String remainTime;
     public String extendedTime;
     public boolean isBeverageOrdered;
+    public String startTime;
+    public String endTime;
+    public String beverageTime;
+    public String customerNo;
 
     public Customer() {}
 
@@ -67,6 +71,38 @@ public class Customer {
 
     public void setExtendedTime(String extendedTime) {
         this.extendedTime = extendedTime;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getBeverageTime() {
+        return beverageTime;
+    }
+
+    public void setBeverageTime(String beverageTime) {
+        this.beverageTime = beverageTime;
+    }
+
+    public String getCustomerNo() {
+        return customerNo;
+    }
+
+    public void setCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
     }
 
     @Override
