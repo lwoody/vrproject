@@ -14,6 +14,7 @@ import com.vrApp.app.service.BoardService;
 import com.vrApp.app.service.CustomerService;
 import com.vrApp.app.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.security.core.Authentication;
@@ -226,20 +227,48 @@ public class MainController {
 		return "currentStatus";
 	}
 
-	@PostMapping(value="/saveCustomer")
-	public @ResponseBody boolean saveCustomer(
+	@PostMapping(value="/endSaveCustomer")
+	public @ResponseBody boolean endSaveCustomer(
 			// @RequestParam("memberCount") String memberCount,
-			@RequestParam("startDate") String startDate,
+			@RequestParam("id") String mongoId,
 			@RequestParam("extendTime") String extendTime,
-			@RequestParam("remainTime") String remainTime, HttpServletRequest request){
+			@RequestParam("remainTime") String remainTime,
+			@RequestParam("endTime") String endTime,
+			@RequestParam("beverageTime") String beverageTime, HttpServletRequest request){
 
-		Customer customerDO = new Customer();
+		Customer customerDO = customerService.getCustomerById(mongoId);
 		// customerDO.setMemberCount(memberCount);
 		customerDO.setExtendedTime(extendTime);
 		customerDO.setRemainTime(remainTime);
+		customerDO.setEndTime(endTime);
+		customerDO.setBeverageTime(beverageTime);
+		customerDO.setbUsing("1");//이용완료 표시
+		customerService.update(customerDO);
+		return true;
+	}
+
+	@PostMapping(value="/entrySaveCustomer")
+	public @ResponseBody String entrySaveCustomer(
+			// @RequestParam("memberCount") String memberCount,
+			@RequestParam("startDate") String startDate,
+			@RequestParam("startTime") String startTime,
+			@RequestParam("customerNo") String customerNo, HttpServletRequest request){
+
+		Customer customerDO = new Customer();
+		// customerDO.setMemberCount(memberCount);
+		customerDO.setStartTime(startTime);
+		customerDO.setCustomerNo(customerNo);
 		customerDO.setStartDate(startDate);
 		customerService.insert(customerDO);
-		return true;
+
+		//mongoId 가져오기
+		String mongoId = customerService.getCustomerByTempId(customerDO).getId();//tempId로 search
+
+		//json으로 보내기
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("id",mongoId);
+
+		return jsonObject.toString();
 	}
 
 	@PostMapping(value="/makeConnection")
