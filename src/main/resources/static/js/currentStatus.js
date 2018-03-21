@@ -289,6 +289,10 @@ $(document).ready(function () {
         $(".progress-img").eq(_selectedCustomerId - 1).css("background-image", 'url("img/beverage.png")');
         $(".progress-img").eq(_selectedCustomerId - 1).css("background-size", "70px 200px");
 
+        //우선 그냥 종소리
+        var snd = new Audio("img/bell.wav");//해당 파일 프로젝내에 저장해놓음
+        snd.play();
+
         _ISALERTEND = true;
 
     });
