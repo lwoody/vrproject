@@ -306,11 +306,13 @@ $(document).ready(function () {
         var oCustomer = _playCustomerList[_selectedCustomerId];
 
         //setTimeout 게이지 소모 비동기 처리가 걸리지만 수동으로 시간 채우고 표시선 보기 때문에 이상없음
-        if (oCustomer.extendTime < 0) {
+        if (oCustomer.remainTime > 0) {
             oCustomer.remainTime = parseFloat(oCustomer.remainTime) + parseFloat(TIME_PERCENTAGE);
-        }else if(oCustomer.extendTime >=0){// 추가 시간 이용 중 일때(시간 남아 있을 때)
+        } else if (oCustomer.extendTime > 0) { // 추가 시간 이용 중 일때(시간 남아 있을 때)
             // oCustomer.extendTime = parseInt(oCustomer.extendTime) - 300;
-            oCustomer.extendTime = 0;
+            oCustomer.extendTime -= 5;
+        } else if (oCustomer.extendTime <= 0) {
+            oCustomer.remainTime += 5;
             //상단 + 추가 이용 표시 제거
             $(".progress-img").eq(_progressId - 1).css("background-image", '');
             $(".progress-img").eq(_progressId - 1).css("background-size", "");
