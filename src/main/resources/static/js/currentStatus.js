@@ -125,7 +125,7 @@ $(document).ready(function () {
 
         var targetElement = e.target;
         var buttonTimeValue = targetElement != null ? targetElement.innerText : "";
-        var TIME_PERCENTAGE = buttonTimeValue == "70" ? 100 : 14.2857142857;
+        var TIME_PERCENTAGE = buttonTimeValue == "70" ? 100 : 14.2857142857; //70분 | 10분 버튼
         _progressId = _selectedCustomerId;
 
         if (_playCustomerCount === MAXPLAYCUSTOMER) { //바뀐 ui 스펙으로는 불필요해짐 - 추후 제거
@@ -312,10 +312,11 @@ $(document).ready(function () {
             // oCustomer.extendTime = parseInt(oCustomer.extendTime) - 300;
             oCustomer.extendTime -= 5;
             if(oCustomer.extendTime<0){
-                oCustomer.remainTime= 0 - oCustomer.extendTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+                oCustomer.remainTime = 0 - oCustomer.extendTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+                console.log(oCustomer.remainTime);
             }
         } else if (oCustomer.extendTime <= 0) {
-            oCustomer.remainTime += 5;
+            oCustomer.remainTime += TIME_PERCENTAGE;
             //상단 + 추가 이용 표시 제거
             $(".progress-img").eq(_progressId - 1).css("background-image", '');
             $(".progress-img").eq(_progressId - 1).css("background-size", "");
