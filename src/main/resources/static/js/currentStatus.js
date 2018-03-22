@@ -310,21 +310,27 @@ $(document).ready(function () {
             oCustomer.remainTime = parseFloat(oCustomer.remainTime) + parseFloat(TIME_PERCENTAGE);
         } else if (oCustomer.extendTime > 0) { // 추가 시간 이용 중 일때(시간 남아 있을 때)
             // oCustomer.extendTime = parseInt(oCustomer.extendTime) - 300;
-            oCustomer.extendTime -= 5;
-            if(oCustomer.extendTime<0){
-                oCustomer.remainTime = 0 - oCustomer.extendTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+            var renderTime = oCustomer.extendTime / 60; // 분 단위
+            var tempIntAddTime = parseInt(renderTime) - 5; // 분 단위
+            if (tempIntAddTime <= 0) {
+                oCustomer.remainTime = 0 - tempIntAddTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+                oCustomer.extendTime = 0;
                 console.log(oCustomer.remainTime);
+                //상단 + 추가 이용 표시 제거
+                $(".progress-img").eq(_progressId - 1).css("background-image", '');
+                $(".progress-img").eq(_progressId - 1).css("background-size", "");
+                //추가 시간 표시 제거
+                var progressElementExtendTimeIndex = ".customer" + _progressId + "_extend_time";
+                $(progressElementExtendTimeIndex).remove("span");
+                $(progressElementExtendTimeIndex).hide();
+            } else {
+                oCustomer.extendTime -= 5 * 60; // 초 단위로 가야함
             }
-        } else if (oCustomer.extendTime <= 0) {
-            oCustomer.remainTime += TIME_PERCENTAGE;
-            //상단 + 추가 이용 표시 제거
-            $(".progress-img").eq(_progressId - 1).css("background-image", '');
-            $(".progress-img").eq(_progressId - 1).css("background-size", "");
-            //추가 시간 표시 제거
-            var progressElementExtendTimeIndex = ".customer" + _progressId + "_extend_time";
-            $(progressElementExtendTimeIndex).remove("span");
-            $(progressElementExtendTimeIndex).hide();
-        }
+        } 
+        // else if (oCustomer.extendTime <= 0) {
+        //     oCustomer.remainTime += TIME_PERCENTAGE;
+
+        // }
         //알림 화면 표시
         _ISALERTEND = false;
         _alertView.show();
