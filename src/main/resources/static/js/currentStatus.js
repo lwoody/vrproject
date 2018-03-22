@@ -311,6 +311,9 @@ $(document).ready(function () {
         } else if (oCustomer.extendTime > 0) { // 추가 시간 이용 중 일때(시간 남아 있을 때)
             // oCustomer.extendTime = parseInt(oCustomer.extendTime) - 300;
             oCustomer.extendTime -= 5;
+            if(oCustomer.extendTime<0){
+                oCustomer.remainTime= 0 - oCustomer.extendTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+            }
         } else if (oCustomer.extendTime <= 0) {
             oCustomer.remainTime += 5;
             //상단 + 추가 이용 표시 제거
