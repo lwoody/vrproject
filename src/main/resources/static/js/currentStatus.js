@@ -313,7 +313,7 @@ $(document).ready(function () {
             var renderTime = oCustomer.extendTime / 60; // 분 단위
             var tempIntAddTime = parseInt(renderTime) - 5; // 분 단위
             if (tempIntAddTime <= 0) {
-                oCustomer.remainTime = 0 - tempIntAddTime; // remainTime이 float처리되어 있어 다시 0으로 갱신 및 음수값 양수 더하기
+                oCustomer.remainTime -= tempIntAddTime*10/7;
                 oCustomer.extendTime = 0;
                 console.log(oCustomer.remainTime);
                 //상단 + 추가 이용 표시 제거
